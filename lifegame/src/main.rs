@@ -9,7 +9,7 @@ const MAX_CELL: usize = 64;
 const ALIVE_CELL: &str = "■";
 const DEAD_CELL: &str = "□";
 
-struct RuleStruct {
+struct LifeGameRule {
     birth: [[usize; BIRTH_PATTERN]; BIRTH_PATTERN],
     alive: [[usize; ALIVE_PATTERN]; ALIVE_PATTERN],
     death1: [[usize; DEATH_PATTERN1]; DEATH_PATTERN1],
@@ -47,7 +47,7 @@ fn main() {
     let mut rng = rand::thread_rng();
 
 
-    let rule = RuleStruct {
+    let rule = LifeGameRule {
         birth: [[1, 1, 0], [1, 0, 0], [0, 0, 0]],
         alive: [[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]],
         death1: [[0, 0, 0], [0, 1, 1], [0, 0, 0]],
