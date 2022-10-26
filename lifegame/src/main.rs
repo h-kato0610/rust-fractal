@@ -1,16 +1,20 @@
+use rand::Rng;
 
 fn main() {
-    let even = "偶数";
-    let odd  = "奇数";
-    let cells: [i32; 32] = Default::default();
-    // let cells: [i32; 32] = [1: 33];
+    const MAX_CELL: usize = 64;
+    let cells: [[i32; MAX_CELL / 2]; MAX_CELL / 2] = Default::default();
+    let mut rng = rand::thread_rng();
 
-    for n in 1..cells.len() {
-        if n % 2 == 0 {
-            println!("{} : {}", n, even);
+    for _j in 0..cells.len() {
+        for _i in 0..cells.len() {
+            let rand = rng.gen_range(0..2);
+            if rand == 0 {
+                print!("{}", "■");
+            }
+            else {
+                print!("{}", "□");
+            }
         }
-        else {
-            println!("{} : {}", n, odd);
-        }
+        println!();
     }
 }
