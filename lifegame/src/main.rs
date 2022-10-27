@@ -16,19 +16,20 @@ struct LifeGameRule {
     death2: [[usize; DEATH_PATTERN2]; DEATH_PATTERN2],
 }
 
-// enum Rule {
-//     Birth,
-//     Alive,
-//     Death
-// }
-// 
-// fn birth(i: i32) -> Rule {
-//     const PATTERN: usize = 3;
-//     // let cells: [[i32; PATTERN]; PATTERN] = [[1, 1, 0]; 1, 0, 0]
-//     let cells: [i32; PATTERN] = [1, 1, 0];
-// 
-//     return Rule::Birth
-// }
+enum Rule {
+    Birth,
+    Alive,
+    Death
+}
+
+fn birth(p: [[usize; BIRTH_PATTERN]; BIRTH_PATTERN]) -> bool {
+    if p == [[1, 1, 0], [1, 0, 0], [0, 0, 0]] {
+        return true
+    }
+    else {
+        return false
+    }
+}
 
 fn create_cell(i: i32) -> String {
     let result;
@@ -54,6 +55,7 @@ fn main() {
         death2: [[1, 1, 1], [1, 1, 0], [0, 0, 0]],
     };
 
+    println!("{}", birth(rule.birth));
 
     for _j in 0..cells.len() {
         for _i in 0..cells.len() {
