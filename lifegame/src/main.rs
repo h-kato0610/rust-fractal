@@ -9,6 +9,11 @@ const MAX_CELL: usize = 64;
 const ALIVE_CELL: &str = "■";
 const DEAD_CELL: &str = "□";
 
+const BIRTH_ARRAY: [[usize; BIRTH_PATTERN]; BIRTH_PATTERN] = [[1, 1, 0,], [1, 0, 0], [0, 0, 0]];
+const ALIVE_ARRAY: [[usize; ALIVE_PATTERN]; ALIVE_PATTERN] = [[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]];
+const DEATH_ARRAY1: [[usize; DEATH_PATTERN1]; DEATH_PATTERN1] = [[0, 0, 0], [0, 1, 1], [0, 0, 0]];
+const DEATH_ARRAY2: [[usize; DEATH_PATTERN2]; DEATH_PATTERN2] = [[1, 1, 1], [1, 1, 0], [0, 0, 0]];
+
 struct LifeGameRule {
     birth: [[usize; BIRTH_PATTERN]; BIRTH_PATTERN],
     alive: [[usize; ALIVE_PATTERN]; ALIVE_PATTERN],
@@ -23,7 +28,34 @@ enum Rule {
 }
 
 fn birth(p: [[usize; BIRTH_PATTERN]; BIRTH_PATTERN]) -> bool {
-    if p == [[1, 1, 0], [1, 0, 0], [0, 0, 0]] {
+    if p == BIRTH_ARRAY {
+        return true
+    }
+    else {
+        return false
+    }
+}
+
+fn alive(p: [[usize; ALIVE_PATTERN]; ALIVE_PATTERN]) -> bool {
+    if p == ALIVE_ARRAY {
+        return true
+    }
+    else {
+        return false
+    }
+}
+
+fn death1(p: [[usize; DEATH_PATTERN1]; DEATH_PATTERN1]) -> bool {
+    if p == DEATH_ARRAY1 {
+        return true
+    }
+    else {
+        return false
+    }
+}
+
+fn death2(p: [[usize; DEATH_PATTERN2]; DEATH_PATTERN2]) -> bool {
+    if p == DEATH_ARRAY2 {
         return true
     }
     else {
@@ -56,6 +88,9 @@ fn main() {
     };
 
     println!("{}", birth(rule.birth));
+    println!("{}", alive(rule.alive));
+    println!("{}", death1(rule.death1));
+    println!("{}", death2(rule.death2));
 
     for _j in 0..cells.len() {
         for _i in 0..cells.len() {
