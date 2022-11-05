@@ -73,7 +73,7 @@ fn create_cell(i: usize) -> String {
 // fn search_cell(
 
 fn main() {
-    let cells: [[i32; MAX_CELL / 2]; MAX_CELL / 2] = Default::default();
+    let cells: [[usize; MAX_CELL / 2]; MAX_CELL / 2] = Default::default();
     let mut rng = rand::thread_rng();
 
     let rule = LifeGameRule {
