@@ -71,8 +71,10 @@ fn create_cell(i: usize) -> String {
     return result.to_string();
 }
 
-// fn search_cell (i: [[usize; ]; ]) {
-// }
+fn search_cell (j: usize, i: usize) -> bool {
+    println!("{}, {}", j, i);
+    return true;
+}
 
 fn main() {
     let cells: [[usize; MAX_CELL / 2]; MAX_CELL / 2] = Default::default();
@@ -90,7 +92,8 @@ fn main() {
         println!("GENERATION : {}", n + 1);
         for _j in 0..cells.len() {
             for _i in 0..cells.len() {
-               let rand = rng.gen_range(0..2);
+                let rand = rng.gen_range(0..2);
+                    let is_alive = search_cell(_j, _i);
 
                 print!("{}", create_cell(rand))
             }
