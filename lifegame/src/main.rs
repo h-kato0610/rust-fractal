@@ -1,4 +1,6 @@
 use rand::Rng;
+use std::thread;
+use std::time::Duration;
 
 const GENERATION: usize = 50;
 
@@ -9,11 +11,7 @@ const DEATH_PATTERN2: usize = 3;
 
 const MAX_CELL: usize = 64;
 const ALIVE_CELL: &str = "■";
-const DEAD_CELL: &str = "□";
-
-const BIRTH_ARRAY: [[usize; BIRTH_PATTERN]; BIRTH_PATTERN] = [[1, 1, 0], [1, 0, 0], [0, 0, 0]];
-const ALIVE_ARRAY: [[usize; ALIVE_PATTERN]; ALIVE_PATTERN] =
-    [[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]];
+const DEAD_CELL: &str = "□"; const BIRTH_ARRAY: [[usize; BIRTH_PATTERN]; BIRTH_PATTERN] = [[1, 1, 0], [1, 0, 0], [0, 0, 0]]; const ALIVE_ARRAY: [[usize; ALIVE_PATTERN]; ALIVE_PATTERN] = [[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]];
 const DEATH_ARRAY1: [[usize; DEATH_PATTERN1]; DEATH_PATTERN1] = [[0, 0, 0], [0, 1, 1], [0, 0, 0]];
 const DEATH_ARRAY2: [[usize; DEATH_PATTERN2]; DEATH_PATTERN2] = [[1, 1, 1], [1, 1, 0], [0, 0, 0]];
 
@@ -96,6 +94,7 @@ fn main() {
             }
             println!();
         }
-    println!("\r");
+        thread::sleep(Duration::from_millis(1000));
+        print!("\x1B[2J\x1B[1;1H");
     }
 }
