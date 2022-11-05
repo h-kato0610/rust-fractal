@@ -1,5 +1,7 @@
 use rand::Rng;
 
+const GENERATION: usize = 50;
+
 const BIRTH_PATTERN: usize = 3;
 const ALIVE_PATTERN: usize = 4;
 const DEATH_PATTERN1: usize = 3;
@@ -83,17 +85,17 @@ fn main() {
         death2: [[1, 1, 1], [1, 1, 0], [0, 0, 0]],
     };
 
-    println!("{}", birth(rule.birth));
-    println!("{}", alive(rule.alive));
-    println!("{}", death1(rule.death1));
-    println!("{}", death2(rule.death2));
 
-    for _j in 0..cells.len() {
-        for _i in 0..cells.len() {
-            let rand = rng.gen_range(0..2);
+    for n in 0..GENERATION {
+        println!("GENERATION : {}", n + 1);
+        for _j in 0..cells.len() {
+            for _i in 0..cells.len() {
+               let rand = rng.gen_range(0..2);
 
-            print!("{}", create_cell(rand))
+                print!("{}", create_cell(rand))
+            }
+            println!();
         }
-        println!();
+    println!("\r");
     }
 }
