@@ -95,6 +95,7 @@ fn main() {
             println!();
         }
         thread::sleep(Duration::from_millis(1000));
+        // Clear Console
         print!("\x1B[2J\x1B[1;1H");
     }
 }
