@@ -2,10 +2,11 @@ use rand::Rng;
 
 const GENERATION: usize = 50;
 
-const BIRTH_PATTERN: usize = 3;
-const ALIVE_PATTERN: usize = 4;
-const DEATH_PATTERN1: usize = 3;
-const DEATH_PATTERN2: usize = 3;
+const RULE_MAX_CELL: usize = 3;
+const BIRTH_PATTERN: usize = RULE_MAX_CELL;
+const ALIVE_PATTERN: usize = RULE_MAX_CELL + 1;
+const DEATH_PATTERN1: usize = RULE_MAX_CELL;
+const DEATH_PATTERN2: usize = RULE_MAX_CELL;
 
 const MAX_CELL: usize = 64;
 const ALIVE_CELL: &str = "■";
@@ -70,7 +71,8 @@ fn create_cell(i: usize) -> String {
     return result.to_string();
 }
 
-// fn search_cell(
+// fn search_cell (i: [[usize; ]; ]) {
+// }
 
 fn main() {
     let cells: [[usize; MAX_CELL / 2]; MAX_CELL / 2] = Default::default();
