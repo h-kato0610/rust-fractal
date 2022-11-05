@@ -1,6 +1,4 @@
 use rand::Rng;
-use std::thread;
-use std::time::Duration;
 
 const GENERATION: usize = 50;
 
@@ -94,8 +92,7 @@ fn main() {
             }
             println!();
         }
-        thread::sleep(Duration::from_millis(1000));
-        // Clear Console
-        print!("\x1B[2J\x1B[1;1H");
+        let mut _input_string = String::new();
+        std::io::stdin().read_line(&mut _input_string).ok();
     }
 }
