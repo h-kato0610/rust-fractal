@@ -58,7 +58,7 @@ fn death2(p: [[usize; DEATH_PATTERN2]; DEATH_PATTERN2]) -> bool {
     }
 }
 
-fn create_cell(i: i32) -> String {
+fn create_cell(i: usize) -> String {
     let result;
 
     match i {
@@ -69,6 +69,8 @@ fn create_cell(i: i32) -> String {
 
     return result.to_string();
 }
+
+// fn search_cell(
 
 fn main() {
     let cells: [[i32; MAX_CELL / 2]; MAX_CELL / 2] = Default::default();
