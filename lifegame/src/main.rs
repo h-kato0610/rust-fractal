@@ -80,7 +80,7 @@ fn convert_num_to_string(i: usize) -> String {
     return result.to_string();
 }
 
-fn search_cell(cells: [[usize; MAX_CELL]; MAX_CELL], _j: usize, _i: usize, rule: &LifeGameRule) -> bool {
+fn search_cell(cells: [[usize; MAX_CELL]; MAX_CELL], _j: usize, _i: usize, rule: &LifeGameRule) -> usize {
     let current_cell_is_alive_or_death = cells[_j][_i];
     let mut top: usize;
     let mut left: usize;
@@ -143,7 +143,24 @@ fn search_cell(cells: [[usize; MAX_CELL]; MAX_CELL], _j: usize, _i: usize, rule:
 
     println!("current: {} , adj : {}", current_cell_is_alive_or_death, adjacent_cells);
 
-    return true
+    let next_cell = 
+        if current_cell_is_alive_or_death == DEAD_NUM {
+            if adjacent_cells == 3 {
+                return ALIVE_NUM;
+        }
+        else if current_cell_is_alive_or_death == ALIVE_NUM {
+            if adjacent_cells == 3 || adjacent_cells == 2 {
+                return ALIVE_NUM;
+            }
+            else if ALIVE_NUM <= 1 {
+                return DEAD_NUM;
+            }
+            else {
+                return DEAD_NUM;
+            }
+        }
+    };
+    return DEAD_NUM;
 }
 
 fn view_cells(cells: [[usize; MAX_CELL]; MAX_CELL]) {
@@ -158,6 +175,7 @@ fn view_cells(cells: [[usize; MAX_CELL]; MAX_CELL]) {
 fn main() {
     let init = 0;
     let mut cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
+    let mut new_cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
     let mut rng = rand::thread_rng();
 
     let rule = LifeGameRule {
@@ -177,7 +195,7 @@ fn main() {
                     cells[_j][_i] = rand;
                 }
                 else {
-                    search_cell(cells, _j, _i, &rule);
+                    new_cells[_j][_i] = search_cell(cells, _j, _i, &rule);
                 }
             }
         }
