@@ -91,12 +91,11 @@ fn main() {
     let mut new_cells: [[usize; MAX_CELL]; MAX_CELL] = Default::default();
     let mut rng = rand::thread_rng();
 
-    // FIXME: Rule to Variable
     let rule = LifeGameRule {
-        birth: [[1, 1, 0], [1, 0, 0], [0, 0, 0]],
-        alive: [[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]],
-        death1: [[0, 0, 0], [0, 1, 1], [0, 0, 0]],
-        death2: [[1, 1, 1], [1, 1, 0], [0, 0, 0]],
+        birth: BIRTH_ARRAY,
+        alive: ALIVE_ARRAY,
+        death1: DEATH_ARRAY1,
+        death2: DEATH_ARRAY2,
     };
 
     // UPDATE: NEW CELLS
