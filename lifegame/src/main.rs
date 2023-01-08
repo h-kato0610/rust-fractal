@@ -1,6 +1,6 @@
 use rand::Rng;
 
-const GENERATION: usize = 1;
+const GENERATION: usize = 2;
 
 const RULE_MAX_CELL: usize = 3;
 const BIRTH_PATTERN: usize = RULE_MAX_CELL;
@@ -82,50 +82,66 @@ fn convert_num_to_string(i: usize) -> String {
 
 fn search_cell(cells: [[usize; MAX_CELL]; MAX_CELL], _j: usize, _i: usize, rule: &LifeGameRule) -> bool {
     let current_cell_is_alive_or_death = cells[_j][_i];
-    let top: usize;
-    let left: usize;
-    let left_top: usize;
-    let left_bottom: usize;
-    let right: usize;
-    let right_top: usize;
-    let right_bottom: usize;
-    let bottom: usize;
+    let mut top: usize;
+    let mut left: usize;
+    let mut left_top: usize;
+    let mut left_bottom: usize;
+    let mut right: usize;
+    let mut right_top: usize;
+    let mut right_bottom: usize;
+    let mut bottom: usize;
+
+    if _i == 0 {
+        left = DEAD_NUM;
+    } else {
+        left = cells[_j][_i - 1];
+    }
+
+    if _i == MAX_CELL {
+        right = DEAD_NUM;
+    } else {
+        right = cells[_j][_i];
+    }
 
     if _j == 0 {
         top = DEAD_NUM;
-    }
-    else {
-        top = cells[_j + 1][_i];
-    }
-
-    if _i == 0 || _j == 0 {
-        left = DEAD_NUM;
-        left_top = DEAD_NUM;
-        left_bottom = DEAD_NUM;
-    }
-    else {
-        left = cells[_j - 1][_i];
-        left_top = cells[_j - 1][_i - 1];
-        left_bottom = cells[_j - 1][_i - 1];
+    } else {
+        top = cells[_j][_i];
     }
 
-    if _i == MAX_CELL || _j == MAX_CELL {
-        right = DEAD_NUM;
-        right_top = DEAD_NUM;
-        right_bottom = DEAD_NUM;
-    }
-    else {
-        right = cells[_j][_i + 1];
-        right_top = cells[_j + 1][_i + 1];
-        right_bottom = cells[_j - 1][_i + 1];
-    }
-
-    if _i == 0 {
+    if _j == MAX_CELL {
         bottom = DEAD_NUM;
+    } else {
+        bottom = cells[_j][_i];
     }
-    else {
-        bottom = cells[_j + 1][_i];
+
+    if _j == 0 || _i == 0 {
+        left_top = DEAD_NUM;
+    } else {
+        left_top = cells[_j][_i];
     }
+
+    if _j == 0 || _i == MAX_CELL {
+        left_bottom = DEAD_NUM;
+    } else {
+        left_bottom = cells[_j][_i];
+    }
+
+    if _j == MAX_CELL || _i == MAX_CELL {
+        right_top = DEAD_NUM;
+    } else {
+        right_top = cells[_j][_i];
+    }
+
+    if _j == MAX_CELL || _i == MAX_CELL {
+        right_bottom = DEAD_NUM;
+    } else {
+        right_bottom = cells[_j][_i];
+    }
+
+    let adjacent_cells = top + left + left_top + left_bottom + right + right_top + right_bottom + bottom;
+
+    println!("current: {} , adj : {}", current_cell_is_alive_or_death, adjacent_cells);
 
     return true
 }
