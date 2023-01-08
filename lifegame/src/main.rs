@@ -1,6 +1,6 @@
 use rand::Rng;
 
-const GENERATION: usize = 50;
+const GENERATION: usize = 1;
 
 const RULE_MAX_CELL: usize = 3;
 const BIRTH_PATTERN: usize = RULE_MAX_CELL;
@@ -8,11 +8,20 @@ const ALIVE_PATTERN: usize = RULE_MAX_CELL + 1;
 const DEATH_PATTERN1: usize = RULE_MAX_CELL;
 const DEATH_PATTERN2: usize = RULE_MAX_CELL;
 
-const MAX_CELL: usize = 64;
+const MAX_CELL: usize = 32;
+
+const ALIVE_NUM: usize = 1;
+const DEAD_NUM: usize = 0;
 const ALIVE_CELL: &str = "■";
-const DEAD_CELL: &str = "□"; const BIRTH_ARRAY: [[usize; BIRTH_PATTERN]; BIRTH_PATTERN] = [[1, 1, 0], [1, 0, 0], [0, 0, 0]]; const ALIVE_ARRAY: [[usize; ALIVE_PATTERN]; ALIVE_PATTERN] = [[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]];
-const DEATH_ARRAY1: [[usize; DEATH_PATTERN1]; DEATH_PATTERN1] = [[0, 0, 0], [0, 1, 1], [0, 0, 0]];
-const DEATH_ARRAY2: [[usize; DEATH_PATTERN2]; DEATH_PATTERN2] = [[1, 1, 1], [1, 1, 0], [0, 0, 0]];
+const DEAD_CELL: &str = "□";
+
+const BIRTH_ARRAY: [[usize; BIRTH_PATTERN]; BIRTH_PATTERN] = [[ALIVE_NUM, ALIVE_NUM, DEAD_NUM], [ALIVE_NUM, DEAD_NUM, DEAD_NUM], [DEAD_NUM, DEAD_NUM, DEAD_NUM]];
+
+const ALIVE_ARRAY: [[usize; ALIVE_PATTERN]; ALIVE_PATTERN] = [[DEAD_NUM, DEAD_NUM, DEAD_NUM, DEAD_NUM], [DEAD_NUM, ALIVE_NUM, ALIVE_NUM, DEAD_NUM], [DEAD_NUM, ALIVE_NUM, ALIVE_NUM, DEAD_NUM], [DEAD_NUM, DEAD_NUM, DEAD_NUM, DEAD_NUM]];
+
+const DEATH_ARRAY1: [[usize; DEATH_PATTERN1]; DEATH_PATTERN1] = [[DEAD_NUM, DEAD_NUM, DEAD_NUM], [DEAD_NUM, ALIVE_NUM, ALIVE_NUM], [DEAD_NUM, DEAD_NUM, DEAD_NUM]];
+
+const DEATH_ARRAY2: [[usize; DEATH_PATTERN2]; DEATH_PATTERN2] = [[ALIVE_NUM, ALIVE_NUM, ALIVE_NUM], [ALIVE_NUM, ALIVE_NUM, DEAD_NUM], [DEAD_NUM, DEAD_NUM, DEAD_NUM]];
 
 struct LifeGameRule {
     birth: [[usize; BIRTH_PATTERN]; BIRTH_PATTERN],
@@ -63,24 +72,26 @@ fn create_cell(i: usize) -> String {
     let result;
 
     match i {
-        0 => result = ALIVE_CELL,
-        1 => result = DEAD_CELL,
+        DEAD_NUM => result = ALIVE_CELL,
+        ALIVE_NUM => result = DEAD_CELL,
         _ => result = DEAD_CELL,
     }
 
     return result.to_string();
 }
 
-fn search_cell (cell: [[usize; MAX_CELL / 2]; MAX_CELL / 2], j: usize, i: usize) -> bool {
+fn search_cell (cell: [[usize; MAX_CELL]; MAX_CELL], j: usize, i: usize) -> bool {
     println!(" @{}@,  @{}@", j, i);
     return true;
 }
 
 fn main() {
-    let cells: [[usize; MAX_CELL / 2]; MAX_CELL / 2] = [[0; MAX_CELL / 2]; MAX_CELL / 2];
-    let mut new_cells: [[usize; MAX_CELL / 2]; MAX_CELL / 2] = Default::default();
+    let init = 0;
+    let cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
+    let mut new_cells: [[usize; MAX_CELL]; MAX_CELL] = Default::default();
     let mut rng = rand::thread_rng();
 
+    // FIXME: Rule to Variable
     let rule = LifeGameRule {
         birth: [[1, 1, 0], [1, 0, 0], [0, 0, 0]],
         alive: [[0, 0, 0, 0], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]],
