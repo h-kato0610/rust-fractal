@@ -56,6 +56,7 @@ fn death2(p: [[usize; DEATH_PATTERN2]; DEATH_PATTERN2]) -> bool {
         return true;
     } else {
         return false;
+    }
 }
 
 fn create_cell(i: usize) -> String {
@@ -103,3 +104,4 @@ fn main() {
         std::io::stdin().read_line(&mut _input_string).ok();
     }
 }
+
