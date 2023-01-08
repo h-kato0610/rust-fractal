@@ -72,8 +72,8 @@ fn convert_num_to_string(i: usize) -> String {
     let result;
 
     match i {
-        DEAD_NUM => result = ALIVE_CELL,
-        ALIVE_NUM => result = DEAD_CELL,
+        ALIVE_NUM => result = ALIVE_CELL,
+        DEAD_NUM => result = DEAD_CELL,
         _ => result = DEAD_CELL,
     }
 
