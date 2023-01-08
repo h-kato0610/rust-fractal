@@ -80,9 +80,21 @@ fn convert_num_to_string(i: usize) -> String {
     return result.to_string();
 }
 
-fn search_cell(cell: [[usize; MAX_CELL]; MAX_CELL], j: usize, i: usize) -> bool {
-    println!(" @{}@,  @{}@", j, i);
-    return true;
+fn search_cell(cells: [[usize; MAX_CELL]; MAX_CELL], rule: &LifeGameRule) {
+    let init = 0;
+    let mut cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
+    let mut alive_or_dead: [usize; RULE_MAX_CELL] = [init; RULE_MAX_CELL];
+    let mut tmp: [usize; RULE_MAX_CELL] = [init; RULE_MAX_CELL];
+
+
+    for _j in 0..MAX_CELL {
+        for _i in 0..MAX_CELL {
+            if (_j == 0 && _i == 0) {
+                alive_or_dead[0] = DEAD_NUM;
+            }
+        }
+    }
+
 }
 
 fn view_cells(cells: [[usize; MAX_CELL]; MAX_CELL]) {
@@ -96,8 +108,7 @@ fn view_cells(cells: [[usize; MAX_CELL]; MAX_CELL]) {
 
 fn main() {
     let init = 0;
-    let cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
-    let mut new_cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
+    let mut cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
     let mut rng = rand::thread_rng();
 
     let rule = LifeGameRule {
@@ -109,16 +120,20 @@ fn main() {
 
     // UPDATE: NEW CELLS
     for n in 0..GENERATION {
-        println!("GENERATION : _{}_", n + 1);
+        println!("GENERATION : {}", n + 1);
         for _j in 0..MAX_CELL {
             for _i in 0..MAX_CELL {
-                let rand = rng.gen_range(0..2);
-                // let is_alive = search_cell(cells, _j, _i);
-                new_cells[_j][_i] = rand;
+                if n == 0 {
+                    let rand = rng.gen_range(0..2);
+                    cells[_j][_i] = rand;
+                }
+                else {
+                    search_cell(cells, &rule);
+                }
             }
-            view_cells(new_cells);
-            println!();
         }
+        view_cells(cells);
+        println!();
         let mut _input_string = String::new();
         std::io::stdin().read_line(&mut _input_string).ok();
     }
