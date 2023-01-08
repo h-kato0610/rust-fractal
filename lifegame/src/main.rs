@@ -56,7 +56,6 @@ fn death2(p: [[usize; DEATH_PATTERN2]; DEATH_PATTERN2]) -> bool {
         return true;
     } else {
         return false;
-    }
 }
 
 fn create_cell(i: usize) -> String {
@@ -71,13 +70,14 @@ fn create_cell(i: usize) -> String {
     return result.to_string();
 }
 
-fn search_cell (j: usize, i: usize) -> bool {
-    println!("{}, {}", j, i);
+fn search_cell (cell: [[usize; MAX_CELL / 2]; MAX_CELL / 2], j: usize, i: usize) -> bool {
+    println!(" @{}@,  @{}@", j, i);
     return true;
 }
 
 fn main() {
-    let cells: [[usize; MAX_CELL / 2]; MAX_CELL / 2] = Default::default();
+    let cells: [[usize; MAX_CELL / 2]; MAX_CELL / 2] = [[0; MAX_CELL / 2]; MAX_CELL / 2];
+    let mut new_cells: [[usize; MAX_CELL / 2]; MAX_CELL / 2] = Default::default();
     let mut rng = rand::thread_rng();
 
     let rule = LifeGameRule {
@@ -87,13 +87,13 @@ fn main() {
         death2: [[1, 1, 1], [1, 1, 0], [0, 0, 0]],
     };
 
-
+    // UPDATE: NEW CELLS
     for n in 0..GENERATION {
-        println!("GENERATION : {}", n + 1);
+        println!("GENERATION : _{}_", n + 1);
         for _j in 0..cells.len() {
             for _i in 0..cells.len() {
                 let rand = rng.gen_range(0..2);
-                    let is_alive = search_cell(_j, _i);
+                    let is_alive = search_cell(cells, _j, _i);
 
                 print!("{}", create_cell(rand))
             }
