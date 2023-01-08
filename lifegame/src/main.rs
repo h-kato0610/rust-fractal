@@ -80,21 +80,54 @@ fn convert_num_to_string(i: usize) -> String {
     return result.to_string();
 }
 
-fn search_cell(cells: [[usize; MAX_CELL]; MAX_CELL], rule: &LifeGameRule) {
-    let init = 0;
-    let mut cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
-    let mut alive_or_dead: [usize; RULE_MAX_CELL] = [init; RULE_MAX_CELL];
-    let mut tmp: [usize; RULE_MAX_CELL] = [init; RULE_MAX_CELL];
+fn search_cell(cells: [[usize; MAX_CELL]; MAX_CELL], _j: usize, _i: usize, rule: &LifeGameRule) -> bool {
+    let current_cell_is_alive_or_death = cells[_j][_i];
+    let top: usize;
+    let left: usize;
+    let left_top: usize;
+    let left_bottom: usize;
+    let right: usize;
+    let right_top: usize;
+    let right_bottom: usize;
+    let bottom: usize;
 
-
-    for _j in 0..MAX_CELL {
-        for _i in 0..MAX_CELL {
-            if (_j == 0 && _i == 0) {
-                alive_or_dead[0] = DEAD_NUM;
-            }
-        }
+    if _j == 0 {
+        top = DEAD_NUM;
+    }
+    else {
+        top = cells[_j + 1][_i];
     }
 
+    if _i == 0 || _j == 0 {
+        left = DEAD_NUM;
+        left_top = DEAD_NUM;
+        left_bottom = DEAD_NUM;
+    }
+    else {
+        left = cells[_j - 1][_i];
+        left_top = cells[_j - 1][_i - 1];
+        left_bottom = cells[_j - 1][_i - 1];
+    }
+
+    if _i == MAX_CELL || _j == MAX_CELL {
+        right = DEAD_NUM;
+        right_top = DEAD_NUM;
+        right_bottom = DEAD_NUM;
+    }
+    else {
+        right = cells[_j][_i + 1];
+        right_top = cells[_j + 1][_i + 1];
+        right_bottom = cells[_j - 1][_i + 1];
+    }
+
+    if _i == 0 {
+        bottom = DEAD_NUM;
+    }
+    else {
+        bottom = cells[_j + 1][_i];
+    }
+
+    return true
 }
 
 fn view_cells(cells: [[usize; MAX_CELL]; MAX_CELL]) {
@@ -128,12 +161,14 @@ fn main() {
                     cells[_j][_i] = rand;
                 }
                 else {
-                    search_cell(cells, &rule);
+                    search_cell(cells, _j, _i, &rule);
                 }
             }
         }
+
         view_cells(cells);
         println!();
+
         let mut _input_string = String::new();
         std::io::stdin().read_line(&mut _input_string).ok();
     }
