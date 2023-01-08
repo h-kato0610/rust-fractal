@@ -68,7 +68,7 @@ fn death2(p: [[usize; DEATH_PATTERN2]; DEATH_PATTERN2]) -> bool {
     }
 }
 
-fn create_cell(i: usize) -> String {
+fn convert_num_to_string(i: usize) -> String {
     let result;
 
     match i {
@@ -80,15 +80,24 @@ fn create_cell(i: usize) -> String {
     return result.to_string();
 }
 
-fn search_cell (cell: [[usize; MAX_CELL]; MAX_CELL], j: usize, i: usize) -> bool {
+fn search_cell(cell: [[usize; MAX_CELL]; MAX_CELL], j: usize, i: usize) -> bool {
     println!(" @{}@,  @{}@", j, i);
     return true;
+}
+
+fn view_cells(cells: [[usize; MAX_CELL]; MAX_CELL]) {
+    for _j in 0..cells.len() {
+        for _i in 0..cells.len() {
+            print!("{}", convert_num_to_string(cells[_j][_i]));
+        }
+        println!("");
+    }
 }
 
 fn main() {
     let init = 0;
     let cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
-    let mut new_cells: [[usize; MAX_CELL]; MAX_CELL] = Default::default();
+    let mut new_cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
     let mut rng = rand::thread_rng();
 
     let rule = LifeGameRule {
@@ -101,13 +110,13 @@ fn main() {
     // UPDATE: NEW CELLS
     for n in 0..GENERATION {
         println!("GENERATION : _{}_", n + 1);
-        for _j in 0..cells.len() {
-            for _i in 0..cells.len() {
+        for _j in 0..MAX_CELL {
+            for _i in 0..MAX_CELL {
                 let rand = rng.gen_range(0..2);
-                    let is_alive = search_cell(cells, _j, _i);
-
-                print!("{}", create_cell(rand))
+                // let is_alive = search_cell(cells, _j, _i);
+                new_cells[_j][_i] = rand;
             }
+            view_cells(new_cells);
             println!();
         }
         let mut _input_string = String::new();
