@@ -80,7 +80,7 @@ fn convert_num_to_string(i: usize) -> String {
     return result.to_string();
 }
 
-fn search_cell(cells: [[usize; MAX_CELL]; MAX_CELL], _j: usize, _i: usize, rule: &LifeGameRule) -> usize {
+fn search_cell(cells: &[[usize; MAX_CELL]; MAX_CELL], _j: usize, _i: usize, rule: &LifeGameRule) -> usize { // [[usize; MAX_CELL]; MAX_CELL] {
     let current_cell_is_alive_or_death = cells[_j][_i];
     let mut top: usize;
     let mut left: usize;
@@ -91,6 +91,9 @@ fn search_cell(cells: [[usize; MAX_CELL]; MAX_CELL], _j: usize, _i: usize, rule:
     let mut right_bottom: usize;
     let mut bottom: usize;
 
+    let init: usize = 0;
+
+    let mut new_cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
     if _i == 0 {
         left = DEAD_NUM;
     } else {
@@ -147,6 +150,7 @@ fn search_cell(cells: [[usize; MAX_CELL]; MAX_CELL], _j: usize, _i: usize, rule:
         if current_cell_is_alive_or_death == DEAD_NUM {
             if adjacent_cells == 3 {
                 return ALIVE_NUM;
+            }
         }
         else if current_cell_is_alive_or_death == ALIVE_NUM {
             if adjacent_cells == 3 || adjacent_cells == 2 {
@@ -159,7 +163,9 @@ fn search_cell(cells: [[usize; MAX_CELL]; MAX_CELL], _j: usize, _i: usize, rule:
                 return DEAD_NUM;
             }
         }
-    };
+        else {
+            return DEAD_NUM;
+        };
     return DEAD_NUM;
 }
 
@@ -174,6 +180,7 @@ fn view_cells(cells: [[usize; MAX_CELL]; MAX_CELL]) {
 
 fn main() {
     let init = 0;
+    // let mut cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
     let mut cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
     let mut new_cells: [[usize; MAX_CELL]; MAX_CELL] = [[init; MAX_CELL]; MAX_CELL];
     let mut rng = rand::thread_rng();
@@ -193,15 +200,16 @@ fn main() {
                 if n == 0 {
                     let rand = rng.gen_range(0..2);
                     cells[_j][_i] = rand;
-                }
-                else {
-                    new_cells[_j][_i] = search_cell(cells, _j, _i, &rule);
+                } else {
+                    new_cells[_j][_i] = search_cell(&cells, _j, _i, &rule);
                 }
             }
         }
 
         view_cells(cells);
         println!();
+
+        cells = new_cells.clone();
 
         let mut _input_string = String::new();
         std::io::stdin().read_line(&mut _input_string).ok();
